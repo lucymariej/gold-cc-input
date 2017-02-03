@@ -186,8 +186,14 @@ Custom property | Description | Default
             this._handleAutoValidate();
         },
 
+        /**
+         * A handler that is called on key press
+         */
         _watchKeydown: function(e) {
+          var me = document.querySelector('gold-cc-input');
+          var value = me.$.input.value;
           console.log('keydown function was called');
+          console.log('value is accessable here: ' + value);
         },
 
         /**
