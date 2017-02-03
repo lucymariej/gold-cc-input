@@ -51,8 +51,8 @@ See `Polymer.PaperInputBehavior` for more API docs.
 See `Polymer.PaperInputContainer` for a list of custom properties used to
 style this element.
 
-Custom property | Description | Default 
-----------------|-------------|---------- 
+Custom property | Description | Default
+----------------|-------------|----------
 `----gold-cc-input-icon-container` | Mixin applied to the icon container | `{}`
 
 @group Gold Elements
@@ -108,6 +108,7 @@ Custom property | Description | Default
             autocomplete="cc-number"
             name$="[[name]]"
             disabled$="[[disabled]]"
+            on-keydown="_watchKeydown"
             invalid="{{invalid}}"
             autofocus$="[[autofocus]]"
             inputmode$="[[inputmode]]"
@@ -183,6 +184,10 @@ Custom property | Description | Default
         _onCardTypesChanged: function(cardTypes, oldValue) {
           if (this.value)
             this._handleAutoValidate();
+        },
+
+        _watchKeydown: function(e) {
+          console.log('keydown function was called');
         },
 
         /**
