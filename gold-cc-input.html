@@ -108,7 +108,7 @@ Custom property | Description | Default
             autocomplete="cc-number"
             name$="[[name]]"
             disabled$="[[disabled]]"
-            on-keydown="_watchKeydown"
+            on-keyup="_watchKeydown"
             invalid="{{invalid}}"
             autofocus$="[[autofocus]]"
             inputmode$="[[inputmode]]"
@@ -160,12 +160,12 @@ Custom property | Description | Default
           cardTypes: {
             type: Array,
             observer: '_onCardTypesChanged'
-          },
-
-          value: {
-            type: String,
-            observer: '_watchKeydown'
           }
+          //
+          // value: {
+          //   type: String,
+          //   observer: '_watchKeydown'
+          // }
         },
 
         observers: [
@@ -190,13 +190,9 @@ Custom property | Description | Default
          * A handler that is called on key press
          */
         _watchKeydown: function(e) {
-          var me = document.querySelector('gold-cc-input');
-          var value = me.$.input.value;
-
-            // The initial property assignment is handled by `ready`.
-           console.log('onWatchKeydown function was called');
-            if (oldValue == undefined)
-              return;
+            var me = document.querySelector('gold-cc-input');
+            var value = me.$.input.value;
+            console.log("CHANGING VALUE TO: " + value);
 
             var start = this.$.input.selectionStart;
             var previousCharASpace = value ? this.value.charAt(start - 1) == ' ' : false;
@@ -220,9 +216,6 @@ Custom property | Description | Default
             }
 
             this._handleAutoValidate();
-
-          console.log('keydown function was called');
-          console.log('value is accessable here: ' + value);
         },
 
         /**
