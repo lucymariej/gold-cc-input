@@ -108,7 +108,7 @@ Custom property | Description | Default
             autocomplete="cc-number"
             name$="[[name]]"
             disabled$="[[disabled]]"
-            on-keyup="_watchKeydown"
+            on-keydown="_watchKeydown"
             invalid="{{invalid}}"
             autofocus$="[[autofocus]]"
             inputmode$="[[inputmode]]"
@@ -190,32 +190,36 @@ Custom property | Description | Default
          * A handler that is called on key press
          */
         _watchKeydown: function(e) {
-            var me = document.querySelector('gold-cc-input');
-            var value = me.$.input.value;
-            console.log("CHANGING VALUE TO: " + value);
+            if(48 <= e.keyCode <= 57){
+              var me = document.querySelector('gold-cc-input');
+              var value = me.$.input.value;
+              console.log("CHANGING VALUE TO: " + value);
+              console.log(e.keyCode);
 
-            var start = this.$.input.selectionStart;
-            var previousCharASpace = value ? this.value.charAt(start - 1) == ' ' : false;
 
-            value = value.replace(/\s+/g, '');
-            var formattedValue = '';
-            for (var i = 0; i < value.length; i++) {
-              // Add a space after every 4 characters.
-              if ((i != 0) && (i % 4 == 0)) {
-                formattedValue += ' ';
+              var start = this.$.input.selectionStart;
+              var previousCharASpace = value ? this.value.charAt(start - 1) == ' ' : false;
+
+              value = value.replace(/\s+/g, '');
+              var formattedValue = '';
+              for (var i = 0; i < value.length; i++) {
+                // Add a space after every 4 characters.
+                if ((i != 0) && (i % 4 == 0)) {
+                  formattedValue += ' ';
+                }
+                formattedValue += value[i];
               }
-              formattedValue += value[i];
-            }
-            this.updateValueAndPreserveCaret(formattedValue.trim());
+              this.updateValueAndPreserveCaret(formattedValue.trim());
 
-            // If the character right before the selection is a newly inserted
-            // space, we need to advance the selection to maintain the caret position.
-            if (!previousCharASpace && this.value.charAt(start - 1) == ' ') {
-              this.$.input.selectionStart = start+1;
-              this.$.input.selectionEnd = start+1;
-            }
+              // If the character right before the selection is a newly inserted
+              // space, we need to advance the selection to maintain the caret position.
+              if (!previousCharASpace && this.value.charAt(start - 1) == ' ') {
+                this.$.input.selectionStart = start+1;
+                this.$.input.selectionEnd = start+1;
+              }
 
-            this._handleAutoValidate();
+              this._handleAutoValidate();
+            }
         },
 
         /**
