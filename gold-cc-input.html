@@ -160,12 +160,11 @@ Custom property | Description | Default
           cardTypes: {
             type: Array,
             observer: '_onCardTypesChanged'
+          },
+
+          value: {
+            type: String
           }
-          //
-          // value: {
-          //   type: String,
-          //   observer: '_watchKeydown'
-          // }
         },
 
         observers: [
@@ -190,12 +189,10 @@ Custom property | Description | Default
          * A handler that is called on key press
          */
         _watchKeydown: function(e) {
-            if(48 <= e.keyCode <= 57){
+            if(e.keyCode > 47 && e.keyCode < 56){
+
               var me = document.querySelector('gold-cc-input');
               var value = me.$.input.value;
-              console.log("CHANGING VALUE TO: " + value);
-              console.log(e.keyCode);
-
 
               var start = this.$.input.selectionStart;
               var previousCharASpace = value ? this.value.charAt(start - 1) == ' ' : false;
@@ -210,6 +207,9 @@ Custom property | Description | Default
                 formattedValue += value[i];
               }
               this.updateValueAndPreserveCaret(formattedValue.trim());
+              // me.$.input.value = formattedValue;
+              // console.log("CHANGING VALUE TO: " + value);
+              // console.log(e.keyCode);
 
               // If the character right before the selection is a newly inserted
               // space, we need to advance the selection to maintain the caret position.
