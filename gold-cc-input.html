@@ -218,15 +218,15 @@ Custom property | Description | Default
 
               this._handleAutoValidate();
             }
-            this._handleAutoValidate();
-            console.log("value: " + this.value);
         },
 
         /**
          * A handler that is called on input
          */
         _onValueChanged: function(value, oldValue) {
-          this._handleAutoValidate();
+          if(this.value){
+            this._handleAutoValidate();
+          }
         },
 
         /**
