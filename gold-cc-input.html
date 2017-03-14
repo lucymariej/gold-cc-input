@@ -163,7 +163,8 @@ Custom property | Description | Default
           },
 
           value: {
-            type: String
+            type: String,
+            observer: '_onValueChanged'
           }
         },
 
@@ -207,9 +208,6 @@ Custom property | Description | Default
                 formattedValue += value[i];
               }
               this.updateValueAndPreserveCaret(formattedValue.trim());
-              // me.$.input.value = formattedValue;
-              // console.log("CHANGING VALUE TO: " + value);
-              // console.log(e.keyCode);
 
               // If the character right before the selection is a newly inserted
               // space, we need to advance the selection to maintain the caret position.
@@ -220,40 +218,16 @@ Custom property | Description | Default
 
               this._handleAutoValidate();
             }
+            this._handleAutoValidate();
+            console.log("value: " + this.value);
         },
 
         /**
          * A handler that is called on input
          */
-        // _onValueChanged: function(value, oldValue) {
-        //   // The initial property assignment is handled by `ready`.
-        //     console.log('onValueChanged function was called');
-        //   if (oldValue == undefined)
-        //     return;
-        //
-        //   var start = this.$.input.selectionStart;
-        //   var previousCharASpace = value ? this.value.charAt(start - 1) == ' ' : false;
-        //
-        //   value = value.replace(/\s+/g, '');
-        //   var formattedValue = '';
-        //   for (var i = 0; i < value.length; i++) {
-        //     // Add a space after every 4 characters.
-        //     if ((i != 0) && (i % 4 == 0)) {
-        //       formattedValue += ' ';
-        //     }
-        //     formattedValue += value[i];
-        //   }
-        //   this.updateValueAndPreserveCaret(formattedValue.trim());
-        //
-        //   // If the character right before the selection is a newly inserted
-        //   // space, we need to advance the selection to maintain the caret position.
-        //   if (!previousCharASpace && this.value.charAt(start - 1) == ' ') {
-        //     this.$.input.selectionStart = start+1;
-        //     this.$.input.selectionEnd = start+1;
-        //   }
-        //
-        //   this._handleAutoValidate();
-        // },
+        _onValueChanged: function(value, oldValue) {
+          this._handleAutoValidate();
+        },
 
         /**
          * Returns true if the element has a valid value, and sets the visual
